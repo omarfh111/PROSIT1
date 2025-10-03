@@ -1,11 +1,27 @@
-import java.util.Arrays;
+package tn.esprit.gestionzoo.entities;
 
 public class Zoo {
-    public Animal[] animals=new Animal[25];
-    String name;
-    String city;
-    final int nbrCages;
-    int animalCount;
+    private Animal[] animals = new Animal[25];
+    private String name;
+    private String city;
+    private final int nbrCages;
+    private int animalCount;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            System.out.println("Erreur : le nom du zoo ne doit pas être vide !");
+        } else {
+            this.name = name;
+        }
+    }
+
+    public int getAnimalCount() {
+        return animalCount;
+    }
+
     public Zoo(String name,String city,int nbrCages) {
         this.name = name;
         this.city = city;
@@ -56,7 +72,7 @@ public class Zoo {
             System.out.println("cet animal existe deja !");
             return false;
         }
-        if (animalCount >= nbrCages) {
+        if (isZooFull()) {
             System.out.println("Zoo plein !");
             return false;
         }

@@ -1,4 +1,7 @@
-import java.util.Scanner;
+package tn.esprit.gestionzoo.main;
+import tn.esprit.gestionzoo.entities.Animal;
+import tn.esprit.gestionzoo.entities.Zoo;
+
 class ZooManagment {
     //public static void main(String[] args) {
         /*int nbrCage = 20;
