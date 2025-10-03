@@ -1,7 +1,7 @@
 package tn.esprit.gestionzoo.main;
 import tn.esprit.gestionzoo.entities.Animal;
 import tn.esprit.gestionzoo.entities.Zoo;
-
+import java.util.Scanner;
 class ZooManagment {
     //public static void main(String[] args) {
         /*int nbrCage = 20;
@@ -25,27 +25,93 @@ class ZooManagment {
 
         }while(nbrCage<0 || zooName.isEmpty());
         System.out.println(zooName + " comporte " + nbrCage + " cages");*/
-        public static void main(String[] args) {
-        Animal lion=new Animal("omar","lion",2,true);
-        Zoo Belvidaire=new Zoo("esprit","ariana",3);
-        Animal tiger = new Animal("aze", "Tigre", 4, true);
-        Animal elephant = new Animal("bbb", "Éléphant", 10, true);
-        Belvidaire.addAnimal(lion);
-        Belvidaire.addAnimal(tiger);
-        Belvidaire.addAnimal(elephant);
-        Belvidaire.displayZoo();
-        Belvidaire.displayAnimals();
-        System.out.println("Index de tigre : " + Belvidaire.searchAnimal(tiger));
-        System.out.println("Index de lion : " + Belvidaire.searchAnimal(lion));
-        System.out.println("Suppression du tigre : " + Belvidaire.removeAnimal(tiger));
-        Belvidaire.displayAnimals();
-        Zoo zoo2 = new Zoo("Zoo", "Tunis", 25);
-        zoo2.addAnimal(new Animal("zzzx", "Chien", 3, true));
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Zoo zoo = new Zoo("", "", 0);
 
-        Zoo sup = Zoo.comparerZoo(Belvidaire, zoo2);
-        System.out.println("Zoo avec le plus d’animaux : " + sup);
-        //System.out.println(Belvidaire);
-        //System.out.println(lion);
+        // --- Saisie du Zoo (les setters vérifient déjà les valeurs) ---
+        System.out.print("Entrez le nom du zoo : ");
+        String zooName = scanner.nextLine();
+        zoo.setName(zooName);
+
+        System.out.print("Entrez la ville du zoo : ");
+        String zooCity = scanner.nextLine();
+        zoo.setCity(zooCity);
+
+        System.out.print("Entrez le nombre de cages (max 25) : ");
+        if (scanner.hasNextInt()) {
+            int nbCages = scanner.nextInt();
+            zoo.setNbrCages(nbCages);
+        } else {
+            System.out.println("Entrée invalide, valeur par défaut maximal 25 appliquée !");
+            scanner.next();
+            zoo.setNbrCages(25);
+        }
+
+        // --- Menu principal ---
+        int choix;
+        do {
+            System.out.println("\n--- MENU ---");
+            System.out.println("1. Ajouter un animal");
+            System.out.println("2. Afficher les animaux");
+            System.out.println("3. Afficher le zoo");
+            System.out.println("0. Quitter");
+            System.out.print("Votre choix : ");
+            choix = scanner.nextInt();
+            scanner.nextLine(); // vider buffer
+
+            switch (choix) {
+                case 1:
+                    // Création d’un animal avec setters
+                    Animal animal = new Animal("", "", 0, false);
+
+                    System.out.print("Entrez la famille de l’animal : ");
+                    animal.setFamily(scanner.nextLine());
+
+                    System.out.print("Entrez le nom de l’animal : ");
+                    animal.setName(scanner.nextLine());
+
+                    System.out.print("Entrez l’âge de l’animal : ");
+                    if (scanner.hasNextInt()) {
+                        animal.setAge(scanner.nextInt());
+                    } else {
+                        System.out.println("Entrée invalide, âge = 0");
+                        scanner.next();
+                        animal.setAge(0);
+                    }
+
+                    System.out.print("Est-ce un mammifère ? (true/false) : ");
+                    if (scanner.hasNextBoolean()) {
+                        animal.setMammal(scanner.nextBoolean());
+                    } else {
+                        System.out.println("Entrée invalide, valeur par défaut false");
+                        scanner.next();
+                        animal.setMammal(false);
+                    }
+
+                    zoo.addAnimal(animal);
+                    System.out.println("Animal ajouté avec succès !");
+                    break;
+
+                case 2:
+                    zoo.displayAnimals();
+                    break;
+
+                case 3:
+                    zoo.displayZoo();
+                    break;
+
+                case 0:
+                    System.out.println("Fermeture du programme...");
+                    break;
+
+                default:
+                    System.out.println("Choix invalide !");
+            }
+        } while (choix != 0);
+
+        scanner.close();
     }
+
 }
  
